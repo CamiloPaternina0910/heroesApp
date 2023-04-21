@@ -1,5 +1,5 @@
 <h1 class="sm:pl-2">
-
+    {{ currentHero.id ? 'Editar' : 'Agregar'}}
     Héroe
     
 </h1>
@@ -13,42 +13,82 @@
             <mat-card>
                 <mat-card-content>
     
-                    <div class="grid">
+                    <form class="grid" [formGroup]="heroForm">
                         <mat-form-field class="col-12 sm:col-6">
                             <mat-label>Super héroe</mat-label>
-                            <input type="text" matInput required>
+                            <input 
+                            type="text" 
+                            matInput 
+                            required
+                            formControlName="superhero"
+                            >
                         </mat-form-field>
     
                         <mat-form-field class="col-12 sm:col-6">
                             <mat-label>Alter ego</mat-label>
-                            <input type="text" matInput required>
+                            <input 
+                            type="text" 
+                            matInput 
+                            required
+                            formControlName="alter_ego"
+                            >
                         </mat-form-field>
     
                         <mat-form-field class="col-12">
                             <mat-label>Primera aparición</mat-label>
-                            <input type="text" matInput required>
+                            <input 
+                            type="text" 
+                            matInput 
+                            required
+                            formControlName="first_appearance"
+                            >
                         </mat-form-field>
     
                         <mat-form-field class="col-12">
                             <mat-label>Personajes</mat-label>
-                            <input type="text" matInput required>
+                            <input 
+                            type="text" 
+                            matInput 
+                            required
+                            formControlName="characters">
                         </mat-form-field>
     
                         <mat-form-field class="col-12">
                             <mat-label>Creador</mat-label>
-                            <mat-select required>
+                            <mat-select 
+                            formControlName="publisher"
+                            required
+                            >
                                 <mat-option *ngFor="let publisher of publishers" [value]="publisher.id"> {{ publisher.id }}</mat-option>
                             </mat-select>
                         </mat-form-field>
-                    </div>
+
+                        <mat-form-field class="col-12">
+                            <mat-label>Imagen alternativa</mat-label>
+                            <input 
+                            type="text" 
+                            matInput 
+                            formControlName="alt_img">
+                        </mat-form-field>
+
+                    </form>
     
                     <div class="flex justify-content-between">
-                        <button mat-flat-button color="primary">
+                        <button 
+                        mat-flat-button 
+                        color="primary"
+                        (click)="onSubmit()"
+                        >
                             <mat-icon>save</mat-icon>
                             Guardar
                         </button>
+                        <span></span>
                         
-                        <button mat-flat-button color="warn">
+                        <button 
+                        mat-flat-button 
+                        color="warn"
+                        *ngIf="currentHero.id"
+                        >
                             <mat-icon>delete</mat-icon>
                             Borrar
                         </button>
@@ -60,7 +100,7 @@
     
         <div class="col-12 sm:col-6">
             <mat-card>
-                <img src="" alt="Imagen" mat-card-image>
+                <img [src]="currentHero | heroImage" alt="Imagen" mat-card-image >
             </mat-card>
         </div>
     </div>
